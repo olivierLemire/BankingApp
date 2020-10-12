@@ -48,11 +48,12 @@ namespace BankingApp.Entities
         public virtual string CloseAndReport()
         {
             currentBalance = currentBalance - monthlyCharge;
-            double finalBalance = CalculateInterest();
+            double finalBalance = currentBalance - CalculateInterest();
             int finalNumDeposits = numDeposits;
             int finalNumWithdrawals = numWithdrawals;
             double finalDeposits = totalDeposits;
             double finalWithdrawals = totalWithdrawals;
+            double finalInterest = CalculateInterest();
             numDeposits = 0;
             numWithdrawals = 0;
             monthlyCharge = 0;
@@ -63,7 +64,7 @@ namespace BankingApp.Entities
                    "\nDeposits : " + finalDeposits.toNAMoneyFormat(false) + " in " + finalNumDeposits + " Deposits"+
                    "\nWithdrawals : " + finalWithdrawals.toNAMoneyFormat(false) + " in " + finalNumWithdrawals + " WithDrawals" +
                    "\nPercentage of change in Balance : " + this.getPercentageChange() +
-                   "\nApplied Interest : " + CalculateInterest().toNAMoneyFormat(false);
+                   "\nApplied Interest : " + finalInterest.toNAMoneyFormat(false);
         }
 
         public Account(double startB, double annualR)
